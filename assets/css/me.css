@@ -1,0 +1,19 @@
+.diskusi {
+    position: fixed;
+    width: 100px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #4fa8fb;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+}
+
+.nav-link:hover {
+    border-bottom: 3px solid #48ABF7;
+    padding: 6px 0;
+}
