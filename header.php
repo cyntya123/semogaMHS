@@ -27,6 +27,12 @@
                         <div class="title-name mt-2 mr-2" style="color: white;">
                             <h5><b>Hi, <?php echo $_SESSION['nama'] ?></b></h5>
                         </div>
+
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link dropdown-toggle" href="index.php?page=logout" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sign-out-alt" title="Logout"></i>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </nav>

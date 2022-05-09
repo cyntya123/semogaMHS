@@ -40,6 +40,17 @@ if (isset($_GET['page'])) {
         case 'vlogbook':
             include "vlogbook.php";
             break;
+        case 'discuss':
+            include "discuss.php";
+            break;
+        case 'discuss2':
+            include "discuss2.php";
+            break;
+        case 'logout':
+            include "logout.php";
+            break;
+
+
         default:
             echo "<center><h3>Maaf. Halaman tidak di temukan !</h3></center>";
             break;

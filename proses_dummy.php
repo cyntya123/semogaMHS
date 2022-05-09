@@ -529,5 +529,98 @@ if ($_GET['PageAction'] == "finalreport") {
 
 // home, data magang
 
+// ====================================================================
+
+//add disscuss
+if ($_GET['PageAction'] == "add_discuss") {
+    session_status() === PHP_SESSION_ACTIVE ?: session_start();
+    date_default_timezone_set('Asia/Jakarta');
+    $token_session = $_SESSION['token'];
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $started = $_SESSION['nama'];
+    $date = date('Y-m-d H:i:s');
+    $nik  = $_SESSION['user_nik'];
+
+    if ($token_session) {
+        $query = mysqli_query($conn, "SELECT * FROM (tb_internship LEFT JOIN tb_lecturer ON tb_internship.nik = tb_lecturer.nik) LEFT JOIN tb_student_internship ON tb_student_internship.nim = tb_internship.nim LEFT JOIN tb_user_company ON tb_internship.id_user_company = tb_user_company.id_user_company WHERE tb_internship.nim='$nik'");
+        $inc = mysqli_num_rows($query);
+
+        if (!$query) {
+            echo $conn->error;
+        } else {
+            while ($data = mysqli_fetch_assoc($query)) {
+                $json[] = $data['id_internship'];
+                $json[1] = $data['id_user_company'];
+                $json[] = $nik;
+            }
+        }
+        $json = json_encode($json);
+        // echo "<p>";
+        // echo $title."<br/>";
+        // echo $content."<br/>";
+        // echo $id_own;
+        // echo "</p>";
+        // print_r($json);
+
+        $insert = mysqli_query($conn, "INSERT INTO tb_discussion VALUES (NULL,'$started','$date','$json','$title','$content')");
+
+        if ($insert) {
+            echo "
+        <script type='text/javascript'>
+         setTimeout(function () { 
+          swal({
+            title: 'Success',
+            text: 'Added Succcesfully!',
+            icon: 'success',
+            buttons: false
+          }); 
+         },10); 
+         window.setTimeout(function(){ 
+          window.history.back();
+         } ,2000); 
+        </script>
+        ";
+        } else {
+            echo ("Error description: " . $conn->error);
+        }
+    }
+}
+
+// ====================================================================
+
+if ($_GET['PageAction'] == 'add_comment') {
+
+    session_status() === PHP_SESSION_ACTIVE ?: session_start();
+
+    $id_diskusi = $_POST['id_diskusi'];
+    $started_by = $_SESSION['nama'];
+    $komen = $_POST['komentar'];
+    $date = date('Y-m-d H:i:s');
+
+
+    $query = mysqli_query($conn, "INSERT INTO tb_comment_discussion VALUES (NULL,'$id_diskusi','$started_by','$komen','$date')");
+
+    if ($query) {
+        echo "
+      <script type='text/javascript'>
+       setTimeout(function () { 
+        swal({
+          title: 'Success',
+          text: 'Added Succcesfully!',
+          icon: 'success',
+          buttons: false
+        }); 
+       },10); 
+       window.setTimeout(function(){ 
+        window.history.back();
+       } ,2000); 
+      </script>
+      ";
+    } else {
+        echo ("Error description: " . $conn->error);
+    }
+}
+
 
 ?>
